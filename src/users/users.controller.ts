@@ -11,12 +11,12 @@ import {
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/user.dto';
-import { Users } from '../db/entities';
 import { UpdateUserDto } from './dto/user_update.dto';
 
 @Controller('users')
 export class UsersController {
   constructor(private usersService: UsersService) {}
+
   @Post('add')
   @UsePipes(ValidationPipe)
   create_user(@Body() user: CreateUserDto) {

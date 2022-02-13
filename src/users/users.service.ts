@@ -4,12 +4,11 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
+
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/user.dto';
 import { UpdateUserDto } from './dto/user_update.dto';
 import { createQueryBuilder } from 'typeorm';
-import { Users } from '../db/entities';
 import { UsersRepository } from './repository/users.repository';
 
 @Injectable()
@@ -40,7 +39,10 @@ export class UsersService {
     if (result.affected === 0) {
       throw new NotFoundException(`User with ID "${id}" not found`);
     } else {
-      throw new HttpException('Success deleted', HttpStatus.OK);
+      return {
+        message: 'Successful deleted',
+        status_code: HttpStatus.NO_CONTENT,
+      };
     }
   }
 

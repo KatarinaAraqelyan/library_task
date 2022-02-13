@@ -6,6 +6,7 @@ import {
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
+
 import { BooksService } from './books.service';
 import { CreateBookDto } from './dto/book.dto';
 
@@ -23,6 +24,7 @@ export class BooksController {
   take_book(@Body() obj) {
     return this.booksService.take_book(obj.book_id, obj.user_id);
   }
+
   @Patch('return')
   return_book(@Body() obj) {
     return this.booksService.return_book(obj.book_id, obj.user_id);

@@ -5,9 +5,8 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+
 import { CreateBookDto } from './dto/book.dto';
-import { Repository } from 'typeorm';
-import { Books, Users } from '../db/entities';
 import { BooksRepository } from './repository/books.repository';
 import { UsersRepository } from '../users/repository/users.repository';
 
@@ -66,16 +65,17 @@ export class BooksService {
     await user.save();
     return book;
   }
+
   async return_book(book_id: number, user_id: number) {
     const book = await this.booksRepository.findOne(book_id);
     const user = await this.usersRepository.findOne(user_id);
     if (!book || !user) {
       throw new NotFoundException('book or user with this name does not exist');
     }
-    if (book.userId === null) {
+    if (!book.userId) {
       throw new HttpException('the book was not taken', HttpStatus.BAD_REQUEST);
     }
-    if (user.subscription === false) {
+    if (!user.subscription) {
       throw new HttpException(
         'you dont have subscription',
         HttpStatus.BAD_REQUEST,

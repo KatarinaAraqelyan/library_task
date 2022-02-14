@@ -35,13 +35,22 @@ export class UsersService {
   }
 
   async delete_user(id: number) {
+    const user = await this.usersRepository.findOne(id);
+    if (user) {
+      if (user.books_count) {
+        throw new HttpException(
+          `You have books in your book list`,
+          HttpStatus.BAD_REQUEST,
+        );
+      }
+    }
     const result = await this.usersRepository.delete({ id });
     if (result.affected === 0) {
       throw new NotFoundException(`User is not found`);
     } else {
       return {
         message: 'Successfully deleted',
-        status_code: HttpStatus.NO_CONTENT,
+        status_code: HttpStatus.OK,
       };
     }
   }

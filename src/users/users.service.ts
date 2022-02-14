@@ -78,15 +78,9 @@ export class UsersService {
         HttpStatus.BAD_REQUEST,
       );
     }
-    if (update.update_item === 'name') {
-      user.name = update.data;
-      await user.save();
-      return user;
-    } else if (update.update_item === 'surname') {
-      user.surname = update.data;
-      await user.save();
-      return user;
-    }
+    user[update.update_item] = update.data;
+    await user.save();
+    return user;
   }
 
   async get_user(id: number) {

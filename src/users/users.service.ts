@@ -26,7 +26,7 @@ export class UsersService {
     });
     if (isExist) {
       throw new HttpException(
-        'User with this name already exists',
+        `User with email - ${user.email} already exists`,
         HttpStatus.BAD_REQUEST,
       );
     }
@@ -37,10 +37,10 @@ export class UsersService {
   async delete_user(id: number) {
     const result = await this.usersRepository.delete({ id });
     if (result.affected === 0) {
-      throw new NotFoundException(`User with ID "${id}" not found`);
+      throw new NotFoundException(`User is not found`);
     } else {
       return {
-        message: 'Successful deleted',
+        message: 'Successfully deleted',
         status_code: HttpStatus.NO_CONTENT,
       };
     }
@@ -49,7 +49,7 @@ export class UsersService {
   async subscription(id: number) {
     const user = await this.usersRepository.findOne(id);
     if (!user) {
-      throw new NotFoundException(`User with ID "${id}" not found`);
+      throw new NotFoundException(`User is not found`);
     }
     if (user.subscription) {
       throw new HttpException(
@@ -70,11 +70,11 @@ export class UsersService {
   async update_user(update: UpdateUserDto) {
     const user = await this.usersRepository.findOne(update.id);
     if (!user) {
-      throw new NotFoundException(`User with ID "${update.id}" not found`);
+      throw new NotFoundException(`User is not found`);
     }
     if (update.update_item !== 'name' && update.update_item !== 'surname') {
       throw new HttpException(
-        `user doesn't field like ${update.update_item}`,
+        `user doesn't have a field like ${update.update_item}`,
         HttpStatus.BAD_REQUEST,
       );
     }
@@ -92,7 +92,7 @@ export class UsersService {
   async get_user(id: number) {
     const user = await this.usersRepository.findOne(id);
     if (!user) {
-      throw new NotFoundException(`User with ID "${id}" not found`);
+      throw new NotFoundException(`User is not found`);
     }
     if (user.books_count === 0) {
       return user;

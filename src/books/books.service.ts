@@ -26,7 +26,7 @@ export class BooksService {
     });
     if (isExist) {
       throw new HttpException(
-        'Book with this name already exists',
+        `Book with name - ${book.name} already exists`,
         HttpStatus.BAD_REQUEST,
       );
     }
@@ -39,7 +39,7 @@ export class BooksService {
     const user = await this.usersRepository.findOne(user_id);
 
     if (!book || !user) {
-      throw new NotFoundException('book or user with this name does not exist');
+      throw new NotFoundException('book or user does not exist');
     }
     if (book.userId !== null) {
       throw new HttpException(
@@ -55,7 +55,7 @@ export class BooksService {
     }
     if (user.subscription === false) {
       throw new HttpException(
-        'you dont have subscription',
+        'you do not have subscription',
         HttpStatus.BAD_REQUEST,
       );
     }
@@ -70,17 +70,15 @@ export class BooksService {
     const book = await this.booksRepository.findOne(book_id);
     const user = await this.usersRepository.findOne(user_id);
     if (!book || !user) {
-      throw new NotFoundException('book or user with this name does not exist');
+      throw new NotFoundException('book or user does not exist');
     }
-    if (!book.userId) {
-      throw new HttpException('the book was not taken', HttpStatus.BAD_REQUEST);
-    }
-    if (!user.subscription) {
+    if (book.userId !== user_id) {
       throw new HttpException(
-        'you dont have subscription',
+        'this book does not exist in your book list',
         HttpStatus.BAD_REQUEST,
       );
     }
+
     book.userId = null;
     await book.save();
     user.books_count--;

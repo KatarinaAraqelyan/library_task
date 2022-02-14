@@ -51,7 +51,7 @@ Install PostgreSQL [Guide](https://www.postgresql.org/download/)
 ## Making requests
 ### ``By default, the API_HOST is http://localhost:3000``
 
-#### Add a new user
+### ``Add a new user``
 request url `API_HOST/users/add`
 
 request method `POST`
@@ -86,7 +86,7 @@ response body
 "message": `User with email - example@gmail.com already exists`
 `}`
 
-#### Delete user
+### ``Delete user``
 request url `API_HOST/users/delete/:id`
 
 request method `DELETE`
@@ -124,7 +124,7 @@ response body
 "error": `"Not Found"`
 `}`
 
-#### Update User
+### ``Update User``
 
 request url `API_HOST/users/update`
 
@@ -169,7 +169,7 @@ response body
 "message": `user doesn't have a field like update_item`
 }
 
-#### User subscription
+### ``User subscription``
 
 request url `API_HOST/users/subscription/:id`
 
@@ -202,7 +202,7 @@ response body
 "message": "you already have an active subscription"
 }
 
-#### Get all users
+### ``Get all users``
 
 request url `API_HOST/users/`
 
@@ -226,7 +226,7 @@ response body
 ..
 `]`
 
-#### Get user by id
+### ``Get user by id``
 
 request url `API_HOST/users/:id`
 
@@ -272,7 +272,7 @@ response body
 `}`
 `]`
 
-#### Add a new book
+### ``Add a new book``
 request url `API_HOST/books/add`
 
 request method `POST`
@@ -305,7 +305,7 @@ response body
 "message": `Book with name - name_example  already exists`
 `}`
 
-#### Take book
+### ``Take book``
 request url `API_HOST/books/take`
 
 request method `PATCH`
@@ -365,7 +365,7 @@ response body
 "userId": `user_id`
 `}`
 
-#### return book
+### ``return book``
 request url `API_HOST/books/return`
 
 request method `PATCH`
